@@ -4,6 +4,7 @@ import {View ,Text ,StyleSheet, Button , FlatList , TouchableOpacity, Touchable 
 import { CATEGORIES } from "../data/dummy-data";
 import Colors from "../constants/Colors";
 import CategoryGridTile from "../components/CategoryGridTile";
+import { color } from "react-native-reanimated";
 
 const CategoriesScreen = props => {
     const renderGridItem = itemData => {
@@ -26,9 +27,10 @@ const CategoriesScreen = props => {
 
     return (
         <FlatList keyExtractor={(item,index) => item.id} //rn eski versionarı için 
-        data={CATEGORIES} 
+        data={CATEGORIES}
         renderItem={renderGridItem}
-        numColumns={2} /> //default 1, yanyana 2 coloum gözüksün diye
+        numColumns={2} > //default 1, yanyana 2 coloum gözüksün diye
+        </FlatList>
     );
 };
 
