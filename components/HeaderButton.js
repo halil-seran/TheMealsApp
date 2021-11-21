@@ -16,9 +16,10 @@ const CustomHeaderButton = props => {
     return (
     <HeaderButton {...props} //forward all props / with this shortcut by pulling out all the key-value pairs and passing them to this object
     IconComponent={Ionicons}
-     iconSize={22} 
-     color={Colors.accentColor} /> 
-    )
+      iconSize={27}
+      color={Platform.OS === 'android' ? '#fb8022' : Colors.primaryColor} 
+    />
+    );
 };
 
 export default CustomHeaderButton;

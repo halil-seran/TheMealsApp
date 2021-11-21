@@ -1,6 +1,6 @@
 import React from "react";
 import {View ,Text ,StyleSheet,Button} from 'react-native';
-import { HeaderButtons, Item } from "react-navigation-stack"; // headrButtons !! s var
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'; // headerButtons !! s var
 
 import { MEALS } from "../data/dummy-data";
 import HeaderButton from '../components/HeaderButton';
@@ -28,17 +28,18 @@ MealDetailScreen.navigationOptions = navigationData => {
     const selectedMeal = MEALS.find(meal => meal.id === mealId);
     return {
       headerTitle: selectedMeal.title,
-      headerRight: 
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Favorite"
-          iconName="ios-star"
-          onPress={() => {
-            console.log('Mark as favorite!');
-          }}
-        />
-      </HeaderButtons>
-    };
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Favorite"
+            iconName="ios-star"
+            onPress={() => {
+              console.log('okndu moruk');
+            }}
+          />
+        </HeaderButtons> //setup is cumbersome but after setup just copy it any component
+      )
+    }
   };
 
 const styles=StyleSheet.create({

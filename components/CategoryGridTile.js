@@ -30,7 +30,10 @@ const styles = StyleSheet.create({
         margin:10,
         height:164,
         borderRadius:30,
-        overflow:'hidden' // dokunma efekti yuvarlak köşelerden taşmasın diye
+        overflow: Platform.OS ==='android' && Platform.Version >=21 ? 'hidden' : 'visible', 
+        // dokunma efekti yuvarlak köşelerden taşmasın diye //shadow efektini kaldırdığı için-
+        elevation:7     // -elevationı buraya containerdan buraya aldık // platfom difference old. için bu şekilde fixledik
+        //aslında aşağıdaki shadowları buraya taşıyarak da çözebilirdi kama bu sefer ios için çalışmıyor
     },
     container:{
         flex:1,
@@ -39,7 +42,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowOffset:{width:0, height:2},
         shadowRadius:11,
-        elevation:8,
         padding:17,
         justifyContent:'flex-end',
         alignItems:'flex-end'
