@@ -13,13 +13,13 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 const CustomHeaderButton = props => {
-    return (
+  return (
     <HeaderButton {...props} //forward all props / with this shortcut by pulling out all the key-value pairs and passing them to this object
-    IconComponent={Ionicons}
+      IconComponent={Ionicons}
       iconSize={27}
-      color={Platform.OS === 'android' ? '#fb8022' : Colors.primaryColor} 
+      color={Platform.OS === 'android' ? '#fb8022' : Colors.primaryColor}
     />
-    );
+  );
 };
 
 export default CustomHeaderButton;

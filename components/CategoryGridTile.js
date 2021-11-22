@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, Text, View, StyleSheet, Platform,TouchableNativeFeedback, TouchableNativeFeedbackBase } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet, Platform, TouchableNativeFeedback, TouchableNativeFeedbackBase } from 'react-native';
 
 const CategoryGridTile = props => {
     let TouchableCmp = TouchableOpacity;
@@ -10,46 +10,46 @@ const CategoryGridTile = props => {
 
     return (
         <View style={styles.gridItem} //Androidde dokunma efekti bozuluyor düzeltmek için bir kezdefa view içerine alıyoruz
-        > 
-        <TouchableCmp  style={{flex:1}}
-            onPress={props.onSelect} //bu categoryscreendeki on selecti trigger lıyor 
         >
-            <View style={{...styles.container, ...{backgroundColor: props.color}}} >
-                <Text style={styles.title} numberOfLines={2} >
-                    {props.title}
-                </Text>
-            </View> 
-        </TouchableCmp>
+            <TouchableCmp style={{ flex: 1 }}
+                onPress={props.onSelect} //bu categoryscreendeki on selecti trigger lıyor 
+            >
+                <View style={{ ...styles.container, ...{ backgroundColor: props.color } }} >
+                    <Text style={styles.title} numberOfLines={2} >
+                        {props.title}
+                    </Text>
+                </View>
+            </TouchableCmp>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    gridItem:{
-        flex:1,
-        margin:10,
-        height:164,
-        borderRadius:30,
-        overflow: Platform.OS ==='android' && Platform.Version >=21 ? 'hidden' : 'visible', 
+    gridItem: {
+        flex: 1,
+        margin: 10,
+        height: 164,
+        borderRadius: 30,
+        overflow: Platform.OS === 'android' && Platform.Version >= 21 ? 'hidden' : 'visible',
         // dokunma efekti yuvarlak köşelerden taşmasın diye //shadow efektini kaldırdığı için-
-        elevation:7     // -elevationı buraya containerdan buraya aldık // platfom difference old. için bu şekilde fixledik
+        elevation: 7     // -elevationı buraya containerdan buraya aldık // platfom difference old. için bu şekilde fixledik
         //aslında aşağıdaki shadowları buraya taşıyarak da çözebilirdi kama bu sefer ios için çalışmıyor
     },
-    container:{
-        flex:1,
-        borderRadius:30,
-        shadowColor:'black',
+    container: {
+        flex: 1,
+        borderRadius: 30,
+        shadowColor: 'black',
         shadowOpacity: 0.3,
-        shadowOffset:{width:0, height:2},
-        shadowRadius:11,
-        padding:17,
-        justifyContent:'flex-end',
-        alignItems:'flex-end'
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 11,
+        padding: 17,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
     },
-    title:{
-        fontFamily:'open-sans-bold',
-        fontSize:16,
-        textAlign:'right'//this is for android ,numOfLines sola atıyor yazıyı bunla tekrar sağa çekiyoruz
+    title: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 16,
+        textAlign: 'right'//this is for android ,numOfLines sola atıyor yazıyı bunla tekrar sağa çekiyoruz
     }
 });
 
