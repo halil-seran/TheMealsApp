@@ -1,9 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView, Image } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'; // headerButtons !! s var
 
 import { MEALS } from "../data/dummy-data";
 import HeaderButton from '../components/HeaderButton';
+
+import DefaultText from "../components/DefaultText";
+
+const ListItem = props => {
+  return (
+    <View style={styles.listItem} >
+      <DefaultText>- {props.children}</DefaultText>
+    </View>
+  );  
+};
 
 const MealDetailScreen = props => {
 
@@ -12,15 +22,19 @@ const MealDetailScreen = props => {
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
 
   return (
-    <View style={styles.screen} >
-      <Text>
-        {selectedMeal.title}
-      </Text>
-      <Button title='go to main page' onPress={() => {
-        props.navigation.popToTop(); //popToTop stackteki tüm screenleri kaldırır, parent screen kalır
-      }} />
-    </View>
-  );
+    <ScrollView>
+      <Image source={{uri:selectedMeal.imageUrl}} style={styles.image} />
+      <View style={styles.details}>
+        <DefaultText>{selectedMeal.duration}m</DefaultText>
+        <DefaultText>{selectedMeal.complexity.toUpperCase()}</DefaultText>
+        <DefaultText>{selectedMeal.affordability.toUpperCase()}</DefaultText>
+      </View>
+      <Text style={styles.title} >Ingredients</Text>
+      {selectedMeal.ingredients.map(ingredient => (<ListItem key={ingredient}>{ingredient}</ListItem>))}
+      <Text style={styles.title} >Steps</Text>
+      {selectedMeal.steps.map(step => (<ListItem key={step}>{step}</ListItem>))}
+    </ScrollView>
+  );  //ingredients ve steps leri bu şekilde çağırdık çünkü onlar array
 };
 
 MealDetailScreen.navigationOptions = navigationData => {
@@ -34,7 +48,7 @@ MealDetailScreen.navigationOptions = navigationData => {
           title="Favorite"
           iconName="ios-star"
           onPress={() => {
-            console.log('okndu moruk');
+            console.log('');
           }}
         />
       </HeaderButtons> //setup is cumbersome but after setup just copy it any component
@@ -43,10 +57,28 @@ MealDetailScreen.navigationOptions = navigationData => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  image:{
+    width:'100%',
+    height:211
+  },
+  details:{
+    flexDirection:'row',
+    padding:16,
+    justifyContent:'space-around'
+  },
+  title:{
+    fontFamily:'open-sans-bold',
+    fontSize:23,
+    textAlign:'center',
+    color:'red'
+  },
+  listItem:{
+    marginVertical:3,
+    marginHorizontal:19,
+    borderColor:'#656565',
+    borderWidth:1.3,
+    padding:11,
+    borderRadius:12
   }
 });
 
