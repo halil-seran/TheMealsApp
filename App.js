@@ -7,15 +7,26 @@ import AppLoading from 'expo-app-loading';
 //son olarak npm install yazıyoruz (son hatayı düzeltiyoruz, eksik birkaç dosyayı yüklüyor)
 import MealsNavigator from './navigation/MealsNavigator';
 
-import {enableScreens} from 'react-native-screens';
+import { createStore, combineReducers } from 'redux';
+import mealsReducer from './store/reducers/meals';
+import { Provider } from 'react-redux';
+
+import { enableScreens } from 'react-native-screens';
 //önce npm install --save react-native-screens yazdık
 //daha büyük applerde performansı artırıyor
 enableScreens();
 
+const rootReducer = combineReducers({
+  meals: mealsReducer
+});
+
+const store = createStore(rootReducer);
+
+
 const FetchFonts = () => {
   return Font.loadAsync({
-    'open-sans':require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold':require('./assets/fonts/OpenSans-Bold.ttf')
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
     //return önemli! fontu tanımladık kodumuzda kullanıbileceğiz
   });
 };
@@ -33,7 +44,11 @@ export default function App() {
     );
   }
 
-  return <MealsNavigator />;
+  return (
+    <Provider store={store} >
+      <MealsNavigator />
+    </Provider>
+  );
 }
 
 //react navigation için Meals Navigator componentine bakabilirsin.
