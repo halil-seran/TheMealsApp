@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, Platform } from 'react-native';
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from '../components/HeaderButton'; //!! parantez yok
+import { useDispatch } from "react-redux";
+import { setFilters } from '../store/actions/meals'
 
 import Colors from "../constants/Colors";
 
 const FilterSwitch = props => {
     return (
-        <View style={styles.filterContainer} >
+        <View style={styles.filterContainer}>
             <Text>{props.label}</Text>
             <Switch
                 trackColor={{ false: '#ccc', true: Colors.accentColor }}
                 thumbColor={Platform.OS === 'android' ? Colors.accentColor : ''}
                 value={props.state}
-                onValueChange={props.onChange} />
+                onValueChange={props.onChange}
+            />
         </View>
     );
 };
@@ -26,33 +29,50 @@ const FiltersScreen = props => {
     const [isVegan, setIsVegan] = useState(false);
     const [isVegetarian, setIsVegetarian] = useState(false);
 
+    const dispatch = useDispatch();
+
     const saveFilters = useCallback(() => {
         const appliedFilters = {
-            GlutenFree: isGlutenFree,
-            lactoseFree: isLactoseFree,
-            vegan: isVegan,
-            Vegetarian: isVegetarian
+          glutenFree: isGlutenFree,
+          lactoseFree: isLactoseFree,
+          vegan: isVegan,
+          vegetarian: isVegetarian
         };
-        console.log(appliedFilters);
-    }, { isGlutenFree, isLactoseFree, isVegan, isVegetarian });
+
+        dispatch(setFilters(appliedFilters));
+        
+    }, [ isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
     useEffect(() => {
-        props.navigation.setParams({ save: saveFilters });
+        navigation.setParams({ save: saveFilters });
     }, [saveFilters]);
 
     return (
-        <View style={styles.screen} >
-            <Text style={styles.title} >
-                Available Filters / Restrictions
-            </Text>
-            <FilterSwitch label='Gluten-free ' state={isGlutenFree} onChange={newValue => setIsGlutenFree(newValue)} />
-            <FilterSwitch label='Lactose-free' state={isLactoseFree} onChange={newValue => setIsLactoseFree(newValue)} />
-            <FilterSwitch label='     Vegan      ' state={isVegan} onChange={newValue => setIsVegan(newValue)} />
-            <FilterSwitch label='   Vegetarian ' state={isVegetarian} onChange={newValue => setIsVegetarian(newValue)} />
+        <View style={styles.screen}>
+            <Text style={styles.title}>Available Filters / Restrictions</Text>
+            <FilterSwitch
+                label="Gluten-free"
+                state={isGlutenFree}
+                onChange={newValue => setIsGlutenFree(newValue)}
+            />
+            <FilterSwitch
+                label="Lactose-free"
+                state={isLactoseFree}
+                onChange={newValue => setIsLactoseFree(newValue)}
+            />
+            <FilterSwitch
+                label="Vegan"
+                state={isVegan}
+                onChange={newValue => setIsVegan(newValue)}
+            />
+            <FilterSwitch
+                label="Vegetarian"
+                state={isVegetarian}
+                onChange={newValue => setIsVegetarian(newValue)}
+            />
         </View>
     );
 };
-
 FiltersScreen.navigationOptions = (navData) => {
     return {
         headerTitle: 'Filter Meals',
@@ -69,8 +89,8 @@ FiltersScreen.navigationOptions = (navData) => {
             <HeaderButtons
                 HeaderButtonComponent={HeaderButton}
             >
-                <Item title="Save" iconName='ios-save' 
-                onPress={navData.navigation.getParam('save')}
+                <Item title="Save" iconName='ios-save'
+                    onPress={navData.navigation.getParam('save')}
                 />
             </HeaderButtons>
         )
@@ -143,7 +163,7 @@ const MyComponent = props => {
     const innerFunction = () => {
         // a function in a function!
         // this function object (stored in the 'innerFunction' constant) is constantly re-built
-        // to be precise: It's re-built when MyComponent is re-built 
+        // to be precise: It's re-built when MyComponent is re-built
         // MyComponent is re-built whenever its 'props' or 'state' changes
     };
 };
@@ -155,7 +175,7 @@ const MyComponent = props => {
     const innerFunction = () => {
         // do something!
     };
- 
+
     useEffect(() => {
         innerFunction();
         // The effect calls innerFunction, hence it should declare it as a dependency
@@ -177,4 +197,4 @@ useCallback() helps you prevent this.
 By wrapping it around a function declaration and defining the dependencies of the function, it ensures that the function is only re-created if its dependencies changed.
 
 Hence the function is NOT re-built on every render cycle anymore => You break out of the infinite loop!
-*/ 
+*/
