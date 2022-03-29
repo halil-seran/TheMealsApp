@@ -164,10 +164,11 @@ const MainNavigator = createDrawerNavigator({
   contentOptions: {
     activeTintColor: Colors.accentColor,
     labelStyle: {
-      fontFamily: 'open-sans'
+      fontFamily: 'open-sans',
+      fontSize:18
     },
     itemsContainerStyle: {
-      marginTop: 40,
+      marginTop: 45,
       flex: 1
     },
   },
